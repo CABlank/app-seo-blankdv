@@ -1,0 +1,9 @@
+{
+  "name": "app-web-pixel-seo",
+  "version": "1.0.0",
+  "main": "dist/main.js",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@shopify/web-pixels-extension": "^0.1.1"
+  }
+}
