@@ -35,8 +35,9 @@ function checkHeadersForReauthorization(headers, app) {
     redirect.dispatch(
       Redirect.Action.REMOTE,
       authUrlHeader.startsWith("/")
-        ? `https://${window.location.host}${authUrlHeader}`
+        ? `https://dataforseo-27a36c20e8e5.herokuapp.com${authUrlHeader}`
         : authUrlHeader
     );
   }
 }
+
