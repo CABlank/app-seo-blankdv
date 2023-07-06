@@ -50,7 +50,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'Blankdev-DataForSEO'
+          app-name: 'app-for-seo'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B87EF29377B84AC991987407EA7A341D }}
           package: .
