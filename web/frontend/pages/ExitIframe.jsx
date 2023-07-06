@@ -12,7 +12,7 @@ export default function ExitIframe() {
   useEffect(() => {
     if (!!app && !!search) {
       const params = new URLSearchParams(search);
-      const redirectUri = params.get("redirectUri");
+      const redirectUri = decodeURIComponent(params.get("redirectUri"));
       console.log("redirectUri:", redirectUri); // added this line
       
       const url = new URL(decodeURIComponent(redirectUri));
