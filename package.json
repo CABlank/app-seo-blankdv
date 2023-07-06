@@ -12,10 +12,11 @@
     "info": "shopify app info",
     "generate": "shopify app generate",
     "deploy": "shopify app deploy"
-  },  
+  },
   "dependencies": {
     "@shopify/app": "3.47.1",
-    "@shopify/cli": "3.47.1"
+    "@shopify/cli": "^3.47.1",
+    "@shopify/theme": "^3.47.3"
   },
   "author": "Carlos",
   "private": true,
