@@ -13,7 +13,10 @@ export default function ExitIframe() {
     if (!!app && !!search) {
       const params = new URLSearchParams(search);
       const redirectUri = params.get("redirectUri");
+      console.log("redirectUri:", redirectUri); // added this line
+      
       const url = new URL(decodeURIComponent(redirectUri));
+      console.log("url:", url); // added this line
 
       if (
         [location.hostname, "admin.shopify.com"].includes(url.hostname) ||
