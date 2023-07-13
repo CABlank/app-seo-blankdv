@@ -26,8 +26,12 @@ mongoose.connect(MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedT
 const PORTPROCC = process.env.PORT || 3001; // Changed to another port (3001) to avoid EADDRINUSE error
 
 
+import { defineConfig } from "vite";
 const PORT = parseInt(
-  process.env.BACKEND_PORT || process.env.PORT || "3000",import { defineConfig } from "vite";
+  process.env.BACKEND_PORT || process.env.PORT || "3000",
+  10
+);
+
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import https from "https";
