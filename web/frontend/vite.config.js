@@ -60,4 +60,9 @@ export default defineConfig({
       "^/api(/|(\\?.*)?$)": proxyOptions,
     },
   },
+  build: {
+    rollupOptions: {
+      external: ['axios'],
+    },
+  },
 });
