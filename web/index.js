@@ -27,10 +27,8 @@ const PORTPROCC = process.env.PORT || 3001; // Changed to another port (3001) to
 
 
 import { defineConfig } from "vite";
-const PORT = parseInt(
-  process.env.BACKEND_PORT || process.env.PORT || "3000",
-  10
-);
+const BACKEND_PORT = 3001;
+const FRONTEND_PORT = 3000;
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -48,7 +46,7 @@ if (
 }
 
 const proxyOptions = {
-  target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
+  target: `http://127.0.0.1:${BACKEND_PORT}`,
   changeOrigin: false,
   secure: true,
   ws: false,
@@ -70,7 +68,7 @@ if (host === "localhost") {
   hmrConfig = {
     protocol: "wss",
     host: host,
-    port: process.env.FRONTEND_PORT,
+    port: FRONTEND_PORT,
     clientPort: 443,
   };
 }
@@ -86,7 +84,7 @@ export default defineConfig({
   },
   server: {
     host: "localhost",
-    port: process.env.FRONTEND_PORT,
+    port: FRONTEND_PORT,
     hmr: hmrConfig,
     proxy: {
       "^/(\\?.*)?$": proxyOptions,
@@ -95,8 +93,7 @@ export default defineConfig({
   },
 });
 
-  10
-);
+
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
@@ -158,4 +155,3 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 });
 
 app.listen(PORTPROCC, () => console.log(`Server is running on port ${PORTPROCC}`));
-
