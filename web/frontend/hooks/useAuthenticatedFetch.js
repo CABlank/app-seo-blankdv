@@ -31,15 +31,12 @@ function checkHeadersForReauthorization(headers, app) {
       headers.get("X-Shopify-API-Request-Failure-Reauthorize-Url") ||
       `/api/auth`;
 
-    let redirectUrl = authUrlHeader;
-    if (authUrlHeader.startsWith("/")) {
-      // If authUrlHeader is a relative path, prepend the base URL
-      redirectUrl = `https://dataforseo-27a36c20e8e5.herokuapp.com${authUrlHeader}`;
-    }
-
     const redirect = Redirect.create(app);
-    redirect.dispatch(Redirect.Action.REMOTE, redirectUrl);
+    redirect.dispatch(
+      Redirect.Action.REMOTE,
+      authUrlHeader.startsWith("/")
+        ? `https://${window.location.host}${authUrlHeader}`
+        : authUrlHeader
+    );
   }
 }
-
-

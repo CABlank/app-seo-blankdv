@@ -6,14 +6,6 @@ import { useState, useEffect } from 'react';
 export default function PageName() {
   const { t } = useTranslation();
   
-  const [data, setData] = useState(null);
-  
-  useEffect(() => {
-    fetch('https://apiv2.ahrefs.com?from=backlinks&target=ahrefs.com&limit=10&output=json&token=EDRcqV37CfNwlF53jeD5Iqb-C_RPPXtzp-4UlCBb')
-      .then(response => response.json())
-      .then(data => setData(data));
-  }, []);
-
   return (
     <Page>
       <TitleBar
@@ -37,7 +29,6 @@ export default function PageName() {
             </Text>
             <TextContainer>
               <p>{t("PageName.body")}</p>
-              <p>Data from Ahrefs: {data ? JSON.stringify(data) : 'Loading...'}</p>
             </TextContainer>
           </Card>
           <Card sectioned>

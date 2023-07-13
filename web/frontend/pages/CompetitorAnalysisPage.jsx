@@ -1,22 +1,25 @@
-import {
-  Card,
-  Page,
-  Layout,
-  TextContainer,
-  Image,
-  Stack,
-  Link,
-  Text,
-} from "@shopify/polaris";
+import { DataTable, Page, Card, Layout, Stack, Link, TextContainer, Text, Image } from '@shopify/polaris';
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation, Trans } from "react-i18next";
-
+import useApi from '../hooks/useApi';
 import { trophyImage } from "../assets";
-
 import { ProductsCard } from "../components";
+import DomainExtractor from "../components/DomainExtractor";
 
 export default function HomePage() {
   const { t } = useTranslation();
+  const { data, error } = useApi();
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  const rows = data; 
+
   return (
     <Page narrowWidth>
       <TitleBar title={t("HomePage.title")} primaryAction={null} />
@@ -83,6 +86,10 @@ export default function HomePage() {
               </Stack.Item>
             </Stack>
           </Card>
+          <div>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+          </div>
+          <DomainExtractor />
         </Layout.Section>
         <Layout.Section>
           <ProductsCard />

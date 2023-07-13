@@ -12,11 +12,8 @@ export default function ExitIframe() {
   useEffect(() => {
     if (!!app && !!search) {
       const params = new URLSearchParams(search);
-      const redirectUri = decodeURIComponent(params.get("redirectUri"));
-      console.log("redirectUri:", redirectUri); // added this line
-      
-      const url = new URL(decodeURIComponent(redirectUri));
-      console.log("url:", url); // added this line
+      const redirectUri = params.get("redirectUri");
+      const url = new URL(decodeURIComponent(redirectUri));z
 
       if (
         [location.hostname, "admin.shopify.com"].includes(url.hostname) ||
@@ -25,8 +22,8 @@ export default function ExitIframe() {
         const redirect = Redirect.create(app);
         redirect.dispatch(
           Redirect.Action.REMOTE,
-          redirectUri
-        );        
+          decodeURIComponent(redirectUri)
+        );
       } else {
         setShowWarning(true);
       }

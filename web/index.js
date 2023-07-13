@@ -3,10 +3,28 @@ import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
 import serveStatic from "serve-static";
+import mongoose from "mongoose"
+import apiRoutes from './routes/apiRoutes.js';
+import './jobs/updateData.js';
+
+import SeoData from './models/SeoData.js';
+import Session from './models/Session.js';
 
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
+
+
+const MONGODB_CONNECTION_STRING = 'mongodb+srv://carlosblank333:9tQPbFvcUR369XIt@cluster0.0r2skgb.mongodb.net/?retryWrites=true&w=majority'; // Replace with your MongoDB connection string
+
+
+// Connecting to MongoDB
+mongoose.connect(MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log('Database connected!'))
+.catch(err => console.log(err));
+
+const PORTPROCC = process.env.PORT || 3001; // Changed to another port (3001) to avoid EADDRINUSE error
+
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
@@ -31,6 +49,8 @@ app.post(
   shopify.config.webhooks.path,
   shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
 );
+
+app.use('/api', apiRoutes);
 
 // If you are adding routes outside of the /api path, remember to
 // also add a proxy rule for them in web/frontend/vite.config.js
@@ -70,4 +90,5 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
     .send(readFileSync(join(STATIC_PATH, "index.html")));
 });
 
-app.listen(PORT);
+app.listen(PORTPROCC, () => console.log(`Server is running on port ${PORTPROCC}`));
+
