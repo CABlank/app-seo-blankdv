@@ -17,6 +17,7 @@ const billingConfig = {
     interval: BillingInterval.OneTime,
   },
 };
+
 const shopify = shopifyApp({
   api: {
     apiKey: process.env.SHOPIFY_API_KEY,
