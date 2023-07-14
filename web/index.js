@@ -2,6 +2,7 @@
 import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
+import cors from "cors";
 import serveStatic from "serve-static";
 import mongoose from "mongoose"
 import apiRoutes from './routes/apiRoutes.js';
@@ -13,6 +14,9 @@ import Session from './models/Session.js';
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
+
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const MONGODB_CONNECTION_STRING = 'mongodb+srv://carlosblank333:9tQPbFvcUR369XIt@cluster0.0r2skgb.mongodb.net/test?retryWrites=true&w=majority'; 
@@ -108,6 +112,8 @@ const STATIC_PATH =
     : `${process.cwd()}/frontend/`;
 
 const app = express();
+
+app.use(cors());
 
 // Set up Shopify authentication and webhook handling
 app.get(shopify.config.auth.path, shopify.auth.begin());

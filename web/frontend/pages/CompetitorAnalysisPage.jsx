@@ -86,10 +86,12 @@ export default function HomePage() {
               </Stack.Item>
             </Stack>
           </Card>
-          <div>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          </div>
           <DomainExtractor />
+          <div>
+            {/*
+            <pre>{JSON.stringify(data, null, 2)}</pre> 
+            */}
+          </div>
         </Layout.Section>
         <Layout.Section>
           <ProductsCard />
