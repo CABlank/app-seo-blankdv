@@ -8,12 +8,12 @@
     "shopify": "shopify",
     "build": "shopify app build",
     "dev": "shopify app dev",
-    "start": "node index.js",
+    "start": "node web/index.js",
     "info": "shopify app info",
     "generate": "shopify app generate",
     "deploy": "shopify app deploy",
     "heroku-postbuild": "cd web/frontend && npm install && npm run build"
-  },  
+}, 
   "dependencies": {
     "@shopify/app": "3.47.1",
     "@shopify/app-bridge-utils": "^3.5.1",
