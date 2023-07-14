@@ -2,6 +2,10 @@ import { defineConfig } from "vite";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import react from "@vitejs/plugin-react";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
 
 if (
   process.env.npm_lifecycle_event === "build" &&
@@ -44,9 +48,6 @@ if (host === "localhost") {
 export default defineConfig({
   root: dirname(fileURLToPath(import.meta.url)),
   plugins: [react()],
-  define: {
-    "process.env.SHOPIFY_API_KEY": JSON.stringify(process.env.SHOPIFY_API_KEY || ""),
-  },
   resolve: {
     preserveSymlinks: true,
   },
