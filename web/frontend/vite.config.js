@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import https from "https";
 import react from "@vitejs/plugin-react";
 
 if (
@@ -17,7 +16,7 @@ if (
 const proxyOptions = {
   target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
   changeOrigin: false,
-  secure: true,
+  secure: false,
   ws: false,
 };
 
@@ -62,7 +61,6 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['axios'],
     },
   },
 });

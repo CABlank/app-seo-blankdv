@@ -17,11 +17,16 @@ import GDPRWebhookHandlers from "./gdpr.js";
 
 const MONGODB_CONNECTION_STRING = 'mongodb+srv://carlosblank333:9tQPbFvcUR369XIt@cluster0.0r2skgb.mongodb.net/test?retryWrites=true&w=majority'; 
 
-
 // Connecting to MongoDB
-mongoose.connect(MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(() => console.log('Database connected!'))
-.catch(err => console.log(err));
+const connectDB = async () => {
+  try {
+    await mongoose.connect(MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Database connected!');
+  } catch (err) {
+    console.log(err);
+  }
+};
+connectDB();
 
 
  
@@ -147,6 +152,7 @@ app.get("/api/products/create", async (_req, res) => {
 });
 
 app.use(shopify.cspHeaders());
+
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
