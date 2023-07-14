@@ -21,6 +21,7 @@
     "@shopify/theme": "^3.47.3",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
+    "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.0.1",
@@ -35,5 +36,8 @@
     "web",
     "web/frontend",
     "extensions/*"
-  ]
+  ],
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
 }
