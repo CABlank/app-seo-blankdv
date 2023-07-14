@@ -20,8 +20,8 @@ const billingConfig = {
 
 const shopify = shopifyApp({
   api: {
-    apiKey: process.env.SHOPIFY_API_KEY,
-    apiSecretKey: process.env.API_SECRET_KEY,
+    apiKey: process.env.SHOPIFY_API_KEY || "",
+    apiSecretKey: process.env.API_SECRET_KEY || "",
     apiVersion: LATEST_API_VERSION,
     restResources,
     billing: undefined,
