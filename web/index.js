@@ -108,7 +108,7 @@ export default defineConfig({
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
-    ? `${process.cwd()}/frontend/dist`
+    ? `${process.cwd()}/dist` // Updated this line
     : `${process.cwd()}/frontend/`;
 
 const app = express();
@@ -165,7 +165,7 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
   return res
     .status(200)
     .set("Content-Type", "text/html")
-    .send(readFileSync(join(STATIC_PATH, "index.html")));
+    .send(readFileSync(join(STATIC_PATH, "index.html"))); // Updated this line
 });
 
 app.listen(PORTPROCC, () => console.log(`Server is running on port ${PORTPROCC}`));

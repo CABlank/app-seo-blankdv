@@ -4,7 +4,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "vite build",
+    "build": "vite build --outDir ../dist",
     "dev": "vite",
     "coverage": "vitest run --coverage"
   },
