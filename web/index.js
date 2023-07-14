@@ -15,13 +15,14 @@ import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 
 
-const MONGODB_CONNECTION_STRING = 'mongodb+srv://carlosblank333:9tQPbFvcUR369XIt@cluster0.0r2skgb.mongodb.net/?retryWrites=true&w=majority'; // Replace with your MongoDB connection string
+const MONGODB_CONNECTION_STRING = 'mongodb+srv://carlosblank333:9tQPbFvcUR369XIt@cluster0.0r2skgb.mongodb.net/test?retryWrites=true&w=majority'; 
 
 
 // Connecting to MongoDB
 mongoose.connect(MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log('Database connected!'))
 .catch(err => console.log(err));
+
 
  
 const PORTPROCC = process.env.PORT || 3001; // Changed to another port (3001) to avoid EADDRINUSE error
