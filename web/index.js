@@ -38,7 +38,7 @@ const PORT = parseInt(
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
-    ? `${process.cwd()}/frontend/dist`
+    ? `${process.cwd()}/web/frontend/dist/`
     : `${process.cwd()}/frontend/`;
 
 const app = express();
@@ -86,14 +86,18 @@ app.get("/api/products/create", async (_req, res) => {
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
-// Apply ensureInstalledOnShop() middleware only to /app route
-// Use the same route specified in Shopify Partner Dashboard for App URL
-app.get("/", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
-  return res
-    .status(200)
-    .set("Content-Type", "text/html")
-    .send(readFileSync(join(STATIC_PATH, "index.html")));
+// Express routing
+app.get("/exitiframe", (req, res) => {
+  // handle exit iframe...
 });
+
+app.get("/app", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
+  return res
+  .status(200)
+  .set("Content-Type", "text/html")
+  .send(readFileSync(join(STATIC_PATH, "index.html")));
+});
+
 
 
 // Other routes without ensureInstalledOnShop()
