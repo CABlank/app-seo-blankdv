@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+/* import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSessionToken } from '@shopify/app-bridge-utils';
 import { useAppBridge } from '@shopify/app-bridge-react';
@@ -39,3 +39,4 @@ const DomainExtractor = () => {
 };
 
 export default DomainExtractor;
+*/
