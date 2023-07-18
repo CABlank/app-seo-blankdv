@@ -7,4 +7,4 @@ WORKDIR /app
 COPY web .
 RUN npm install
 RUN cd frontend && npm install && npm run build
-CMD ["node", "web/index.js"]
+CMD ["npm", "run", "dev"]
