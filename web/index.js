@@ -48,11 +48,26 @@ app.use(serveStatic(STATIC_PATH, { index: false }));
 app.use("/api/*", shopify.validateAuthenticatedSession());
 app.use(express.json());
 
-app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
-  return res
-    .status(200)
-    .set("Content-Type", "text/html")
-    .send(readFileSync(join(STATIC_PATH, "index.html"))); // The path here is also updated
-});
+const ensureInstalledOnShop = async (req, res, next) => {
+  const shop = req.query.shop;
+
+  if (!shop) {
+      console.error("ensureInstalledOnShop did not receive a shop query argument");
+      return res.status(400).send("Missing shop parameter");
+  }
+
+  // Check if the app is installed on the shop
+  const isInstalled = await isAppInstalledOnShop(shop);
+
+  if (!isInstalled) {
+      // If it's not installed, redirect to install process
+      const installUrl = getInstallUrl(shop);
+      return res.redirect(installUrl);
+  }
+
+  // If it's installed, proceed
+  next();
+}
+
 
 app.listen(PORTPROCC, () => console.log(`Server is running on port ${PORTPROCC}`));
