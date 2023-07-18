@@ -87,12 +87,14 @@ app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
 // Apply ensureInstalledOnShop() middleware only to /app route
-app.get("/app", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
+// Use the same route specified in Shopify Partner Dashboard for App URL
+app.get("/", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
   return res
     .status(200)
     .set("Content-Type", "text/html")
     .send(readFileSync(join(STATIC_PATH, "index.html")));
 });
+
 
 // Other routes without ensureInstalledOnShop()
 app.get("/other-route", async (_req, res, _next) => {
