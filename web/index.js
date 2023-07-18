@@ -86,25 +86,14 @@ app.get("/api/products/create", async (_req, res) => {
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
-// Express routing
-app.get("/exitiframe", (req, res) => {
-  // handle exit iframe...
-  res.send("Successfully exited iframe"); // add this
-});
-
-app.get("/", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
+app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
   return res
-  .status(200)
-  .set("Content-Type", "text/html")
-  .send(readFileSync(join(STATIC_PATH, "index.html")));
+    .status(200)
+    .set("Content-Type", "text/html")
+    .send(readFileSync(join(STATIC_PATH, "index.html"))); // The path here is also updated
 });
 
 
-
-// Other routes without ensureInstalledOnShop()
-app.get("/other-route", async (_req, res, _next) => {
-  // ...
-});
 
 
 app.listen(PORT);
