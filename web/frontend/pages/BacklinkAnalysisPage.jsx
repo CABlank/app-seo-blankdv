@@ -80,6 +80,7 @@ export default function HomePage() {
                     width={120}
                   />
                 </div>
+                
               </Stack.Item>
             </Stack>
           </Card>
