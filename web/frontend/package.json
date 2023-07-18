@@ -7,7 +7,7 @@
     "build": "set SHOPIFY_API_KEY=%SHOPIFY_API_KEY% && vite build --outDir ../dist",
     "dev": "vite",
     "coverage": "vitest run --coverage"
-  },  
+  },
   "type": "module",
   "engines": {
     "node": ">= 12.16"
@@ -21,6 +21,7 @@
     "@formatjs/intl-pluralrules": "^5.2.2",
     "@shopify/app-bridge": "^3.7.7",
     "@shopify/app-bridge-react": "^3.7.7",
+    "@shopify/app-bridge-utils": "^3.5.1",
     "@shopify/i18next-shopify": "0.2.0",
     "@shopify/polaris": "^10.49.1",
     "@vitejs/plugin-react": "1.2.0",
