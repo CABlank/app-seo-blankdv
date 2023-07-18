@@ -89,9 +89,10 @@ app.use(serveStatic(STATIC_PATH, { index: false }));
 // Express routing
 app.get("/exitiframe", (req, res) => {
   // handle exit iframe...
+  res.send("Successfully exited iframe"); // add this
 });
 
-app.get("/app", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
+app.get("/", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
   return res
   .status(200)
   .set("Content-Type", "text/html")
