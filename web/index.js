@@ -31,43 +31,66 @@ const connectDB = async () => {
 };
 connectDB();
 
-const PORTPROCC = process.env.PORT || 3001;
+const PORT = parseInt(
+  process.env.BACKEND_PORT || process.env.PORT || "3000",
+  10
+);
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
-    ? `${process.cwd()}/web/frontend/dist/`  // Changed to reflect your solution
+    ? `${process.cwd()}/frontend/dist`
     : `${process.cwd()}/frontend/`;
-
-console.log(`Serving static files from ${STATIC_PATH}`);
-console.log(`Index file exists: ${existsSync(join(STATIC_PATH, 'index.html'))}`);
 
 const app = express();
 
-app.use(cors());
-app.use(serveStatic(STATIC_PATH, { index: false }));
+// Set up Shopify authentication and webhook handling
+app.get(shopify.config.auth.path, shopify.auth.begin());
+app.get(
+  shopify.config.auth.callbackPath,
+  shopify.auth.callback(),
+  shopify.redirectToShopifyOrAppRoot()
+);
+app.post(
+  shopify.config.webhooks.path,
+  shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
+);
+
+// If you are adding routes outside of the /api path, remember to
+// also add a proxy rule for them in web/frontend/vite.config.js
+
 app.use("/api/*", shopify.validateAuthenticatedSession());
+
 app.use(express.json());
 
-const ensureInstalledOnShop = async (req, res, next) => {
-  const shop = req.query.shop;
+app.get("/api/products/count", async (_req, res) => {
+  const countData = await shopify.api.rest.Product.count({
+    session: res.locals.shopify.session,
+  });
+  res.status(200).send(countData);
+});
 
-  if (!shop) {
-      console.error("ensureInstalledOnShop did not receive a shop query argument");
-      return res.status(400).send("Missing shop parameter");
+app.get("/api/products/create", async (_req, res) => {
+  let status = 200;
+  let error = null;
+
+  try {
+    await productCreator(res.locals.shopify.session);
+  } catch (e) {
+    console.log(`Failed to process products/create: ${e.message}`);
+    status = 500;
+    error = e.message;
   }
+  res.status(status).send({ success: status === 200, error });
+});
 
-  // Check if the app is installed on the shop
-  const isInstalled = await isAppInstalledOnShop(shop);
+app.use(shopify.cspHeaders());
+app.use(serveStatic(STATIC_PATH, { index: false }));
 
-  if (!isInstalled) {
-      // If it's not installed, redirect to install process
-      const installUrl = getInstallUrl(shop);
-      return res.redirect(installUrl);
-  }
+app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
+  return res
+    .status(200)
+    .set("Content-Type", "text/html")
+    .send(readFileSync(join(STATIC_PATH, "index.html")));
+});
 
-  // If it's installed, proceed
-  next();
-}
-
-
-app.listen(PORTPROCC, () => console.log(`Server is running on port ${PORTPROCC}`));
+app.listen(PORT);
