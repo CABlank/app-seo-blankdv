@@ -15,10 +15,10 @@
     "heroku-postbuild": "cd web/frontend && npm install && npm run build"
   },
   "dependencies": {
-    "@shopify/app": "3.47.1",
+    "@shopify/app": "^3.44.1",
     "@shopify/app-bridge-utils": "^3.5.1",
-    "@shopify/cli": "^3.47.1",
-    "@shopify/theme": "^3.47.3",
+    "@shopify/cli": "^3.23.0",
+    "@shopify/theme": "^3.23.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "child_process": "^1.0.2",
